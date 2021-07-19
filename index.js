@@ -1,13 +1,17 @@
 
 const express = require('express');
 const app = express();
+const path = require('path');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
-})
+
+// Routing
+app.use(express.static(path.join(__dirname, 'public')));
+// app.get('/', (req, res) => {
+//     res.sendFile(__dirname + '/public/index.html');
+// })
 
 io.on('connection', (socket) => {
     console.log("A user has connected", socket.id);
@@ -37,4 +41,4 @@ http.listen(port, () => {
     console.log(`Socket.IO server running at http://localhost:${port}/`);
 });
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
