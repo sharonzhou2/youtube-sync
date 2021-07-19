@@ -1,0 +1,53 @@
+#player {
+
+    
+}
+
+#title {
+    text-align: center;
+    padding: 50px;
+}
+
+.centered-object {
+    position: absolute;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.buttons {
+    position: absolute;
+    top: 77%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.play-button {
+    font-weight: 100;
+}
+
+.progress-align {
+    position: absolute;
+    width: 850px;
+    top: 85%;
+    left: 50%;
+    transform: translateX(-50%);
+
+} 
+
+#progressBar {
+    width: 0%;
+}
+
+#slider {
+    /* -webkit-appearance: none; */
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
