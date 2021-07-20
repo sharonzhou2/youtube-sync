@@ -1,5 +1,5 @@
-#player {
-
+body {
+    background-color: white;
     
 }
 
@@ -51,3 +51,19 @@
     transition: opacity .2s;
 }
 
+
+
+.dark-theme {
+    background-color: 	#212121;
+    color: white;
+}
+
+#themeIcon {
+    background-color: transparent;
+    border: none;
+}
+
+.input-mysize {
+    width: 55%;
+    margin-left: 80px;
+}

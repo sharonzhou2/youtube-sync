@@ -7,6 +7,8 @@ let progressBar = document.getElementById("slider");
 let physicalProgress = document.querySelector(".progress");
 let playButton = document.getElementById("play");
 let pauseButton = document.getElementById("pause");
+let themeButton = document.getElementById("themeIcon");
+let navbar = document.getElementById("youtube-nav");
 
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -100,3 +102,26 @@ socket.on('play', (data) => {
 socket.on('pause', (data) => {
     player.pauseVideo();
 })
+
+
+
+/////////////////////////////////////////////
+// Toggling between dark-mode and lightmode
+let whiteTheme = true;
+themeButton.addEventListener('click', toggleTheme);
+function toggleTheme() {
+    let background = document.body;
+    background.classList.toggle("dark-theme");
+    navbar.classList.toggle("bg-dark");
+    navbar.classList.toggle("navbar-dark");
+
+    // Check what the current theme is
+    if (background.classList.contains("dark-theme")) {
+        whiteTheme = false;
+    } else {
+        whiteTheme = true;
+    }
+
+
+}
+
