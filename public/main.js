@@ -99,14 +99,20 @@ themeButton.addEventListener('click', toggleTheme);
 function toggleTheme() {
     let background = document.body;
     background.classList.toggle("dark-theme");
-    navbar.classList.toggle("bg-dark");
+    searchBar.classList.toggle("dark-theme");
+    
+    navbar.classList.toggle("bg-dark-custom");
     navbar.classList.toggle("navbar-dark");
 
     // Check what the current theme is
     if (background.classList.contains("dark-theme")) {
         whiteTheme = false;
+        submitBtn.classList.remove("btn-outline-dark");
+        submitBtn.classList.add("btn-outline-light");
     } else {
         whiteTheme = true;
+        submitBtn.classList.remove("btn-outline-light");
+        submitBtn.classList.add("btn-outline-dark");
     }
 }
 

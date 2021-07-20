@@ -1,6 +1,17 @@
+* {
+    font-family: 'Noto Sans', sans-serif;
+}
+
 body {
     background-color: white;
     
+}
+
+#logo {
+    padding: 5px;
+    margin-top: 10px;
+    margin-left: 15px;
+    margin-right: 5px;
 }
 
 #title {
@@ -54,8 +65,12 @@ body {
 
 
 .dark-theme {
-    background-color: 	#212121;
+    background-color: 	#181818;
     color: white;
+}
+
+.bg-dark-custom {
+    background-color: #212121 !important;
 }
 
 #themeIcon {
