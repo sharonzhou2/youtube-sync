@@ -9,6 +9,8 @@ let playButton = document.getElementById("play");
 let pauseButton = document.getElementById("pause");
 let themeButton = document.getElementById("themeIcon");
 let navbar = document.getElementById("youtube-nav");
+let searchBar = document.getElementById("search");
+let submitBtn = document.getElementById("submit");
 
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -82,27 +84,12 @@ slider.addEventListener('click', (e) => {
 
 playButton.addEventListener('click', () => {
     socket.emit('play', "playing");
-    console.log("fdsfs");
+    
 })
 
 pauseButton.addEventListener('click', () => {
     socket.emit('pause', "pausing");
 })
-
-// We can now listen for any events that are received
-// from the server
-socket.on('timing', (data) => {
-    player.seekTo(data);
-})
-
-socket.on('play', (data) => {
-    player.playVideo();
-})
-
-socket.on('pause', (data) => {
-    player.pauseVideo();
-})
-
 
 
 /////////////////////////////////////////////
@@ -121,7 +108,46 @@ function toggleTheme() {
     } else {
         whiteTheme = true;
     }
-
-
 }
 
+/////////////////////////////////////////////
+// Submitting a new video to watch
+window.addEventListener('keydown', (e) => {
+    if (e.key === "Enter") {
+        changeVideo();
+    }
+});
+submitBtn.addEventListener('click', changeVideo);
+
+function changeVideo() {
+    let youtubeLink = searchBar.value;
+    searchBar.value = "";
+    let videoid = youtubeLink.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
+    if (videoid === null) {
+        console.log("The youtube url is not valid.");
+        searchBar.classList.add("is-invalid");
+    } else {
+        let id = videoid[1];
+        console.log(id);
+        socket.emit('change', id);
+    }
+}
+
+// We can now listen for any events that are received
+// from the server
+socket.on('timing', (data) => {
+    player.seekTo(data);
+})
+
+socket.on('play', (data) => {
+    player.playVideo();
+})
+
+socket.on('pause', (data) => {
+    console.log("fdsfs");
+    player.pauseVideo();
+})
+
+socket.on('change', (data) => {
+    player.loadVideoById(data, 0);
+})

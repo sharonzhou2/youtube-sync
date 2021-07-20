@@ -28,14 +28,22 @@ io.on('connection', (socket) => {
     
     socket.on('play', (data) => {
         io.sockets.emit('play', data);
-    }) 
+    }); 
 
     socket.on('pause', (data) => {
         io.sockets.emit('pause', data);
-    }) 
+    });
+
+    socket.on('change', (data) => {
+        io.sockets.emit('change', data);
+    }); 
+
+    socket.on('error', function (err) {
+        console.log(err);
+    });
 
 
-})
+});
 
 http.listen(port, () => {
     console.log(`Socket.IO server running at http://localhost:${port}/`);
