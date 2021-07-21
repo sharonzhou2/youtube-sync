@@ -38,6 +38,10 @@ io.on('connection', (socket) => {
         io.sockets.emit('change', data);
     }); 
 
+    socket.on('newMessage', (data) => {
+        io.sockets.emit('newMessage', data);
+    }); 
+
     socket.on('error', function (err) {
         console.log(err);
     });

@@ -87,3 +87,36 @@ body {
 #searchBar:invalid {
 
 }
+
+
+
+#sidebar {
+    position: fixed;
+    right: -350px;
+    width: 350px;
+    height: 100%;
+    background: #ebe7e7;
+    z-index: 1;
+    transition: all 100ms linear;
+
+}
+
+#sidebar.active {
+    right: 0%;
+}
+
+#sidebar #toggle-button {
+    position: absolute;
+    right: 400px;
+    top: 20px;
+}
+
+.input-group-custom {
+    position: fixed;
+    bottom: 0px;
+}
+
+.message-custom {
+    padding: 10px;
+    border-bottom: #d3d3d3;
+}

@@ -41,13 +41,23 @@ function onPlayerReady(event) {
 // 5. The API calls this function when the player's state changes.
 //    The function indicates that when playing a video (state=1),
 //    the player should play for six seconds and then stop.
-var done = false;
+
+let done = false
+
 function onPlayerStateChange(event) {
+
+    console.log(event.data);
     if (event.data == YT.PlayerState.PLAYING && !done) {
-    setInterval(changeProgressBar, 500);
-    // setTimeout(stopVideo, 6000);
-    done = true;
+        setInterval(changeProgressBar, 500);
+         // setTimeout(stopVideo, 6000);
+         done = true;
+       
+    } else if (event.data == YT.PlayerState.PAUSED) {
+        emitPauseVideo();
+        console.log("Im pausing");
     }
+
+
 }
 function stopVideo() {
     player.stopVideo();
@@ -57,8 +67,6 @@ function stopVideo() {
 // let newInterval = setInterval(changeProgressBar, 1000);
 
 // Grab the progress bar from the element
-
-
 function changeProgressBar() {
 
     let totalTime = player.getDuration();
@@ -71,24 +79,26 @@ function changeProgressBar() {
 
 // This allows the client on the frontend to emit the data b
 // back to the server
+function emitPlayVideo() {
+    socket.emit('play', "playing");
+}
 
-slider.addEventListener('click', (e) => {
+function emitPauseVideo() {
+    socket.emit('pause', "pausing");
+}
+
+function emitChangeTime() {
     let percentage = slider.value;
     let videoTime = (percentage * player.getDuration()) / 100;
 
     socket.emit('timing', videoTime);
-    console.log(videoTime);
-    
-})
+}
+slider.addEventListener('click', emitChangeTime);
 
-playButton.addEventListener('click', () => {
-    socket.emit('play', "playing");
-    
-})
+playButton.addEventListener('click', emitPlayVideo);
 
-pauseButton.addEventListener('click', () => {
-    socket.emit('pause', "pausing");
-})
+
+pauseButton.addEventListener('click', emitPauseVideo);
 
 
 /////////////////////////////////////////////
@@ -141,6 +151,47 @@ function changeVideo() {
     }
 }
 
+
+////////////////////////////////////////////////////////
+
+let sidebarToggle = document.getElementById("toggle-button");
+let sidebar = document.getElementById("sidebar");
+sidebarToggle.addEventListener('click', () => {
+    sidebar.classList.toggle("active");
+    // console.log("heee");
+})
+
+////////////////////////////////////////////////////////
+// Add chat message
+let messageChat = document.querySelector(".display");
+let sendBtn = document.getElementById("sendBtn");
+let messageText = document.getElementById("message-input");
+
+function addMessageChat(data) {
+    
+    let messageDiv = createMessageDiv(data.message);
+    messageChat.appendChild(messageDiv);
+}
+
+function createMessageDiv(message) {
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("message-custom");
+    let pTag = document.createElement("p");
+    let messageInfo = document.createTextNode(message);
+    pTag.appendChild(messageInfo);
+    messageDiv.appendChild(pTag);
+
+    return messageDiv;
+}
+
+sendBtn.addEventListener('click', () => {
+    console.log(messageText.value);
+    socket.emit("newMessage", {
+        message: messageText.value,
+        username: ""
+    })
+})
+
 // We can now listen for any events that are received
 // from the server
 socket.on('timing', (data) => {
@@ -152,10 +203,13 @@ socket.on('play', (data) => {
 })
 
 socket.on('pause', (data) => {
-    console.log("fdsfs");
     player.pauseVideo();
 })
 
 socket.on('change', (data) => {
     player.loadVideoById(data, 0);
+})
+
+socket.on('newMessage', (data) => {
+    addMessageChat(data);
 })
