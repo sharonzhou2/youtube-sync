@@ -7,7 +7,6 @@ let progressBar = document.getElementById("slider");
 let physicalProgress = document.querySelector(".progress");
 let playButton = document.getElementById("play");
 let pauseButton = document.getElementById("pause");
-let themeButton = document.getElementById("themeIcon");
 let navbar = document.getElementById("youtube-nav");
 let searchBar = document.getElementById("search");
 let submitBtn = document.getElementById("submit");
@@ -94,8 +93,9 @@ pauseButton.addEventListener('click', () => {
 
 /////////////////////////////////////////////
 // Toggling between dark-mode and lightmode
+let moonStars = document.getElementById("moon");
 let whiteTheme = true;
-themeButton.addEventListener('click', toggleTheme);
+moonStars.addEventListener('click', toggleTheme);
 function toggleTheme() {
     let background = document.body;
     background.classList.toggle("dark-theme");
@@ -133,9 +133,11 @@ function changeVideo() {
         console.log("The youtube url is not valid.");
         searchBar.classList.add("is-invalid");
     } else {
-        let id = videoid[1];
-        console.log(id);
-        socket.emit('change', id);
+        if (searchBar.classList.contains("is-invalid")) {
+            searchBar.classList.remove("is-invalid");
+        }
+        searchBar.classList.add("is-valid");
+        socket.emit('change', videoid[1]);
     }
 }
 
