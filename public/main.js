@@ -10,6 +10,8 @@ let pauseButton = document.getElementById("pause");
 let navbar = document.getElementById("youtube-nav");
 let searchBar = document.getElementById("search");
 let submitBtn = document.getElementById("submit");
+let sidebarToggle = document.getElementById("toggle-button");
+let sidebar = document.getElementById("sidebar");
 
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -94,13 +96,17 @@ function emitChangeTime() {
     socket.emit('timing', videoTime);
 }
 slider.addEventListener('click', emitChangeTime);
-
 playButton.addEventListener('click', emitPlayVideo);
-
-
 pauseButton.addEventListener('click', emitPauseVideo);
 
 
+////////////////////////////////////////////////////////
+
+
+sidebarToggle.addEventListener('click', () => {
+    sidebar.classList.toggle("active");
+    // console.log("heee");
+})
 /////////////////////////////////////////////
 // Toggling between dark-mode and lightmode
 let moonStars = document.getElementById("moon");
@@ -113,6 +119,7 @@ function toggleTheme() {
     
     navbar.classList.toggle("bg-dark-custom");
     navbar.classList.toggle("navbar-dark");
+    sidebar.classList.toggle("dark-theme");
 
     // Check what the current theme is
     if (background.classList.contains("dark-theme")) {
@@ -152,14 +159,6 @@ function changeVideo() {
 }
 
 
-////////////////////////////////////////////////////////
-
-let sidebarToggle = document.getElementById("toggle-button");
-let sidebar = document.getElementById("sidebar");
-sidebarToggle.addEventListener('click', () => {
-    sidebar.classList.toggle("active");
-    // console.log("heee");
-})
 
 ////////////////////////////////////////////////////////
 // Add chat message
