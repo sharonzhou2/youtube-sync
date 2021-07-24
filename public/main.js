@@ -103,8 +103,9 @@ pauseButton.addEventListener('click', emitPauseVideo);
 ////////////////////////////////////////////////////////
 
 
-sidebarToggle.addEventListener('click', () => {
+sidebarToggle.addEventListener('click', (e) => {
     sidebar.classList.toggle("active");
+    e.preventDefault();
     // console.log("heee");
 })
 /////////////////////////////////////////////
@@ -119,7 +120,7 @@ function toggleTheme() {
     
     navbar.classList.toggle("bg-dark-custom");
     navbar.classList.toggle("navbar-dark");
-    sidebar.classList.toggle("dark-theme");
+    sidebar.classList.toggle("bg-dark-custom");
 
     // Check what the current theme is
     if (background.classList.contains("dark-theme")) {
@@ -189,6 +190,7 @@ sendBtn.addEventListener('click', () => {
         message: messageText.value,
         username: ""
     })
+    messageText.value = "";
 })
 
 // We can now listen for any events that are received
